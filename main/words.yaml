@@ -1,0 +1,10 @@
+'numbers':
+  'two_to_three':
+    - 'two'
+    - 'three'
+    - 'response': print("I\'m so good bro")
+    
+  'four_to_five':
+    - 'four'
+    - 'five'
+    - 'response': print('Go away all of you')
