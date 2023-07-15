@@ -3,3 +3,5 @@ keyboard
 vosk
 pyttsx3
 SpeechRecognition
+pyaudio
+sounddevice
