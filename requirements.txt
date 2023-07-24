@@ -1,7 +1,11 @@
 PyYAML
-keyboard
 vosk
 pyttsx3
 SpeechRecognition
 pyaudio
 sounddevice
+webbrowser
+pynput
+pathlib
+pypiwin32
+git+https://github.com/rgryta/pytube.git@main

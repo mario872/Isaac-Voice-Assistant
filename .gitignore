@@ -1,3 +1,4 @@
 main/settings.yaml
 /main/vosk-small/
+main/oauth.json
 .gitignore
