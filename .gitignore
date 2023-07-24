@@ -1,1 +1,3 @@
 main/settings.yaml
+/main/vosk-small/
+.gitignore
