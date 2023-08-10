@@ -1,11 +1,15 @@
 PyYAML
 vosk
 pyttsx3
-SpeechRecognition
+speechrecognition
 pyaudio
 sounddevice
 webbrowser
 pynput
 pathlib
 pypiwin32
+dimits
+bardapi
+'transformers[torch]'
+git+https://github.com/huggingface/transformers
 git+https://github.com/rgryta/pytube.git@main

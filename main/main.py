@@ -60,11 +60,18 @@ commands = {
 
 ###########################################################################################################
 #Setup config
-with open('main/settings.yaml') as settings_yaml:
-    settings = yaml.load(settings_yaml, Loader=yaml.FullLoader)
-
-with open('main/prompt.txt') as prompt_txt:
-    prompt = prompt_txt.readline()
+try:
+    with open('main/settings.yaml') as settings_yaml:
+        settings = yaml.load(settings_yaml, Loader=yaml.FullLoader)
+except:
+    with open('settings.yaml') as settings_yaml:
+        settings = yaml.load(settings_yaml, Loader=yaml.FullLoader)
+try:
+    with open('main/prompt.txt') as prompt_txt:
+        prompt = prompt_txt.readline()
+except:
+    with open('prompt.txt') as prompt_txt:
+        prompt = prompt_txt.readline()
 
 def set_config(config):
     global vosk; global google; global text #Speech selector variables
@@ -75,6 +82,8 @@ def set_config(config):
     global homeassistantapikey
     global bard_token
     global voice
+    global LLama2_model
+    global Ai
     
     #Setting up speech selector
     if config['speech_recogniser'] == 'vosk':
@@ -111,12 +120,12 @@ def set_config(config):
     try:
         bard_token = config['google_bard_cookie_key']
     except:
-        print("No Bard Configuration Found! Please add it, or use offline mode!")
+        pass
         
     try:
         voice = config['default-voice-piper']
     except:
-        pass
+        voice = 'Windows Not Supported for Piper'
     
 set_config(settings)
 
@@ -124,7 +133,8 @@ set_config(settings)
 #Main Loop
 bard = Bard(token=bard_token)
 while True:
-    try:  
+    try:
+        answered = False
         if vosk:
             print("Listening")
             heard = vosk_recognition.get_heard_text()
@@ -136,8 +146,9 @@ while True:
             heard = r.recognize_google(audio).lower()
         elif text:
             heard = input('Type input: ')
-    except:
-        pass
+    except KeyboardInterrupt:
+        print("Exiting")
+        exit()
     
     hotword_present = False   
     for hotword in hotwords:
@@ -161,15 +172,17 @@ while True:
                     break
             if phrases_in_heard:    
                 commands[entry]['command']()
+                answered = True
                 break
         else:
             for phrase in commands[entry]['phrases']:
                 if phrase in heard:
                     #print(commands[entry]['command'])
                     commands[entry]['command']()
+                    answered = True
                     break
     else:
-        if heard != '':
+        if heard != '' and not answered:
             response = bard.get_answer(prompt + heard)['content'].replace('**Bard:** ', '').replace("*", '').replace(":", ".").replace("Brad.", "")
             for phrase in commands[entry]['bard_phrases']:
                 if phrase in response:

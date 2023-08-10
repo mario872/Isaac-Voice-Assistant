@@ -1,0 +1,5 @@
+'speech_recogniser': 'google'
+'vosk_model_name': 'main/vosk-small'
+'homeassistant_api_key': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI4NjU0NTc1NTU4MDM0MjZhOTQxNzJkMGI5ZjM5ZjcwMSIsImlhdCI6MTY5MDQ1NDkxMiwiZXhwIjoyMDA1ODE0OTEyfQ.cVfr67wzEnOQQ65H8rOE5_ENCoRbc15RYJ8IpwG7JZI'
+'homeassistant_url': 'https://ekeuzoifgjt8jeyg6l9qaop6pjd3oe71.ui.nabu.casa'
+'google_bard_cookie_key': 'ZQhG2chekQ3iQUBOikG4Oc0cGAi_MvGzx4w4juc422DnC8MYEp1K7FMNritigVaQlgDTXQ.'

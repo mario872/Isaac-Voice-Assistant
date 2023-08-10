@@ -17,7 +17,6 @@ def init():
     global text
     global voice
 
-
 def remove_hotword(heard, extras=None, replacements=None):
     for hotword in hotwords:
         heard = heard.replace(hotword + ' ', '')

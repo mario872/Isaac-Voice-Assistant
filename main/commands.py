@@ -11,8 +11,12 @@ import yaml
 import subprocess
 import requests
 
-with open('main/apps.yaml') as apps_yaml:
-    apps = yaml.load(apps_yaml, Loader=yaml.FullLoader)
+try:
+    with open('main/apps.yaml') as apps_yaml:
+        apps = yaml.load(apps_yaml, Loader=yaml.FullLoader)
+except:
+    with open('apps.yaml') as apps_yaml:
+        apps = yaml.load(apps_yaml, Loader=yaml.FullLoader)
 
 def play_song(song_name):
     print_and_say("Okay, playing {} on youtube music.".format(song_name), voice, text)
