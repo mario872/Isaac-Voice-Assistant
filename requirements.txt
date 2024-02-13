@@ -4,12 +4,11 @@ pyttsx3
 speechrecognition
 pyaudio
 sounddevice
-webbrowser
 pynput
 pathlib
-pypiwin32
+pypiwin32; platform_system == "Windows"
 dimits
 bardapi
-'transformers[torch]'
+transformers[torch]
 git+https://github.com/huggingface/transformers
 git+https://github.com/rgryta/pytube.git@main
