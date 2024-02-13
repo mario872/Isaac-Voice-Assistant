@@ -1,4 +1,5 @@
 main/settings.yaml
-/main/vosk-small/
+main/vosk-small/
 main/oauth.json
 .gitignore
+__pycache__
