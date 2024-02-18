@@ -1,0 +1,8 @@
+vosk
+pyttsx3
+speechrecognition
+pyaudio
+piper-tts
+sounddevice
+# You ALSO NEED TO RUN python -m pip install git+https://github.com/openai/whisper.git soundfile
+# To get whisper installed

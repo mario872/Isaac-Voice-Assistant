@@ -1,21 +1,9 @@
 #This is just a template settings.yaml file
-'speech_recogniser': '' #Can be google, vosk, or text. Text is currently buggy.
-'only_output_text': False #Do you want voice output as well?
-'vosk_model_name': 'main/vosk-small' #Where do you store your vosk data?
 'homeassistant_api_key': '' #Long lived access key
 'homeassistant_url': '' #Self explanatory
-'ai': 'palm' #palm is the only valid asnwer right now
-'palm_api_key': '' #You do have to sign up to use the PaLM api
-'default-voice-piper': '/home/Me/Code/PiperOutput/TrainingFour/MEMEMEME.onnx' #Path to your Piper voice, should end in
-                                                                               #.onnx and also have a .onnx.json file in
-                                                                               #the same directorym this is an example
-'google_bard_cookie_key': '' #This is broken
-'gui-theme': 'DarkAmber' #Theme for PySimpleGUI
-'wake_word_model_path': '' #This is alos broken and relevenat code removed
-'open_image': 'open.png' #Displays a mouth or sometthing when Isacc is speaking his response
-'close_image': 'closed.png' #Same here
+'ai': 'gemini-pro' #gemini-pro is the only valid answer right now
+'ai_api_key': 'AIzaSyDNxm33CC7goi_6Mkf-bnIsZG9PzPV-ZNY' #Google AI API Key
 'name': 'isaac' #What do you want to call Isaac? Maybe Rick, Jammy, Example 3, or Example 4.
 'ai_images_output_directory': '/home/James/Pictures/AI' #Where should the ai generated images be outputted?
-'hugging_face_access_token': '' #Hugging face access token
+'hugging_face_access_token': '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' #Hugging face access token
 'hugging_face_text2image_model': 'https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0' #API Inference path to the image gneration model you want to use
-'subsample-image-size-gui': 4 #You generally have to upsize, and then subsample your open or close image to make it fit inside the GUI nicely.

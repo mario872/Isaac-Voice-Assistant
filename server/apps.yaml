@@ -1,0 +1,7 @@
+'libre office writer': ['loffice', '--writer']
+'libre office calc': ['loffice', '--calc']
+'libre office impress': ['loffice', '--impress']
+'teams': ['/var/lib/flatpak/app/com.github.IsmaelMartinez.teams_for_linux/current/active/files/teams-for-linux/teams-for-linux']
+'microsoft teams': ['/var/lib/flatpak/app/com.github.IsmaelMartinez.teams_for_linux/current/active/files/teams-for-linux/teams-for-linux']
+'micro soft teams': ['/var/lib/flatpak/app/com.github.IsmaelMartinez.teams_for_linux/current/active/files/teams-for-linux/teams-for-linux']
+'teams for linux': ['/var/lib/flatpak/app/com.github.IsmaelMartinez.teams_for_linux/current/active/files/teams-for-linux/teams-for-linux']

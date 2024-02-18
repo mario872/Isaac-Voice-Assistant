@@ -1,0 +1,10 @@
+PyYAML
+pynput
+pathlib
+pypiwin32; platform_system == "Windows"
+transformers[torch]
+ytmusicapi
+pygame
+google-generativeai
+git+https://github.com/huggingface/transformers
+git+https://github.com/rgryta/pytube.git@main
