@@ -4,11 +4,13 @@ from os import name
 import requests
 import vosk_recognition
 import urllib
+import lamp
 
 heard = ''
 homeassistantapikey = ''
 homeassistanturl = ''
 text = False
+mode = 'happy' #Modes are happy, sassy, burn_alive
 voice = '/home/James/Documents/GitHub/Isaac-Voice-Assistant/James4.onnx'
 
 names = ['isaac', 'sack', 'i sat', 'sack']
@@ -59,12 +61,26 @@ while True:
             break
     
     if not found:
-        print(f'You said {heard} hbut you did not say a hotword!')
+        print(f'You said {heard} but you did not say a hotword!')
         continue
     
     print('Heard: ' + heard)
     
-    response = requests.get('http://127.0.0.1:7200/voice_assistant&request={}'.format(urllib.parse.quote_plus(heard))).text
+    if 'mode ' in heard or 'merge ' in heard or 'most ' in heard or 'mood ' in heard:
+        if 'one' in heard or '1' in heard:
+            mode = 'happy'
+            print_and_say(f'Okay, {mode} mode enabled!')
+            continue
+        elif 'two' in heard or '2' in heard:
+            mode = 'sassy'
+            print_and_say(f'Okay, {mode} mode enabled!')
+            continue
+        elif 'three' in heard or '3' in heard:
+            mode = 'burn_alive'
+            print_and_say(f'Okay, {mode} mode enabled!')
+            continue
+    
+    response = requests.get(f'http://127.0.0.1:7200/voice_assistant&request={urllib.parse.quote_plus(heard)}&prompt={mode}').text
     
     print('Response is ' + response)
     

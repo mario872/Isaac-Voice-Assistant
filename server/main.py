@@ -25,6 +25,8 @@ covers = []
 
 ai_token = ''
 
+prompt_modes = ['happy', 'sassy', 'burn_alive']
+
 safety = [
     {'category': 'HARM_CATEGORY_HARASSMENT', 'threshold': 'block_none'},
     {'category': 'HARM_CATEGORY_DANGEROUS_CONTENT', 'threshold': 'block_none'},
@@ -93,10 +95,10 @@ except:
         settings = yaml.load(settings_yaml, Loader=yaml.FullLoader)
 try:
     with open('server/prompt.txt') as prompt_txt:
-        prompt = prompt_txt.readline()
+        prompts = prompt_txt.readlines()
 except:
     with open('prompt.txt') as prompt_txt:
-        prompt = prompt_txt.readline()
+        prompts = prompt_txt.readlines()
 
 def set_config(config):
     global homeassistantdevices
@@ -137,10 +139,10 @@ app = Flask(__name__)
 
 ai = genai.GenerativeModel('gemini-pro', safety_settings=safety)
                 
-@app.route('/voice_assistant&request=<request>', methods=['GET'])
-def voice_assistant(request):
+@app.route('/voice_assistant&request=<request>&prompt=<mode>', methods=['GET'])
+def voice_assistant(request, mode):
     global global_request
-    
+
     answered = False
     
     request = remove_hotword(urllib.parse.unquote(request)) #Basic formatting to remove Isaac's name from the command
@@ -172,7 +174,7 @@ def voice_assistant(request):
         if request != '' and not answered:
             done = False
             while done == False:
-                response = ai.generate_content(prompt + request).text.replace('**AI:** ', '').replace("*", '').replace(":", ".").replace("Bard.", "")
+                response = ai.generate_content(prompts[prompt_modes.index(mode)] + request).text.replace('**AI:** ', '').replace("*", '').replace(":", ".").replace("Bard.", "")
                 done = True
                     
             for phrase in commands[entry]['ai_phrases']:
@@ -184,4 +186,4 @@ def voice_assistant(request):
                 return response
             
 if __name__ == '__main__':
-    app.run('127.0.0.1', port=7200)
+    app.run('0.0.0.0', port=7200)
