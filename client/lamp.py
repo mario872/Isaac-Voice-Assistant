@@ -48,7 +48,9 @@ def lamp_colour(colour: str):
                'purple': (200, 0, 255),
                'pink': (255, 0, 175)}
     
-    pixels.fill(colours[colour])
-    pixels.show()
+    for colour_in_colours in colours.keys():
+        if colour_in_colours in colour:
+            pixels.fill(colours[colour])
+            pixels.show()
     
 lamp_colour(input('Lamp colour: ').lower())

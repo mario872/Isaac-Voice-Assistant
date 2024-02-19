@@ -79,6 +79,9 @@ while True:
             mode = 'burn_alive'
             print_and_say(f'Okay, {mode} mode enabled!')
             continue
+    elif 'lamp color ' in heard or 'lamp colour ' in heard:
+        lamp.lamp_colour(heard)
+        continue
     
     response = requests.get(f'http://127.0.0.1:7200/voice_assistant&request={urllib.parse.quote_plus(heard)}&prompt={mode}').text
     
