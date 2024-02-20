@@ -41,7 +41,7 @@ def save(text, file_name, model_set=model):
     global voice
     
     if model_set == None and model == None: #Check if a model has been set, if not then exit.
-        print("No model was set! Please set a model using drjtts.load(\"your_model_here\")")
+        print("No model was set! Please set a model using pyper.load(\"your_model_here\")")
         exit()
     elif model_set != None: #Is there a voice that should be used only once?
         temp_voice = piper.load(model_set)
@@ -57,7 +57,7 @@ def say(text, model_set=model):
     global voice
     
     if model_set == None and model == None: #Check if a model has been set, if not then exit.
-        print("No model was set! Please set a model using drjtts.load(\"your_model_here\")")
+        print("No model was set! Please set a model using pyper.load(\"your_model_here\")")
         exit()
     elif model_set != None: #Is there a voice that should only be used once?
         temp_voice = piper.load(model_set)

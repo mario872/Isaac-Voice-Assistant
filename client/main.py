@@ -1,10 +1,15 @@
 import pyttsx3
-import pyper
 from os import name
 import requests
 import vosk_recognition
 import urllib
-import lamp
+#import lamp
+import speech_recognition as sr
+import json
+from os import environ
+environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide" #Stop pygame from saying hello in the console
+
+from pygame import mixer
 
 heard = ''
 homeassistantapikey = ''
@@ -12,6 +17,8 @@ homeassistanturl = ''
 text = False
 mode = 'happy' #Modes are happy, sassy, burn_alive
 voice = '/home/James/Documents/GitHub/Isaac-Voice-Assistant/James4.onnx'
+
+url = "127.0.0.1:7200"
 
 names = ['isaac', 'sack', 'i sat', 'sack']
 #names = ['sunny', 'sonny', 'funny']
@@ -28,7 +35,9 @@ for item in names:
     
 print(hotwords)
 
-vosk_recognition.config_set({'vosk_model_name': '/home/James/Documents/GitHub/Isaac-Voice-Assistant/client/vosk_small'})
+mixer.init()
+
+#vosk_recognition.config_set({'vosk_model_name': '/home/James/Documents/GitHub/Isaac-Voice-Assistant/client/vosk_small'})
 
 def remove_hotword(heard, extras=None, replacements=None):
     for hotword in hotwords:
@@ -42,19 +51,25 @@ def remove_hotword(heard, extras=None, replacements=None):
     return heard
 
 def print_and_say(say):
-    if name == 'nt':
-        engine = pyttsx3.init()
-        engine.setProperty('rate', 150)
-    else:
-        engine = pyper.load(voice)
     print(say)
-    pyper.say(say)
-    if name == 'nt':
-        engine.runAndWait()
+    mixer.music.load('client/saved_audio.wav')
+    mixer.music.set_volume(1)
+    mixer.music.play()
             
 while True:
     found = False
-    heard = vosk_recognition.get_heard_text()
+    print('Say something!')
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        r.adjust_for_ambient_noise(source)
+        audio = r.listen(source)
+        
+        print('Sending Request')
+        stream = requests.post(f"http://{url}/stream", files={"file": audio.get_wav_data()})
+    
+    heard = stream.text
+    print(heard)
+    
     for hotword in hotwords:
         if hotword in heard:
             found = True
@@ -83,8 +98,9 @@ while True:
         lamp.lamp_colour(heard)
         continue
     
-    response = requests.get(f'http://127.0.0.1:7200/voice_assistant&request={urllib.parse.quote_plus(heard)}&prompt={mode}').text
+    response = requests.get(f'http://{url}/voice_assistant&request={urllib.parse.quote_plus(heard)}&prompt={mode}').text
     
-    print('Response is ' + response)
-    
+    with open('client/saved_audio.wav', 'wb') as saved_audio_file:
+        saved_audio_file.write(requests.get(f'http://{url}/tts&request={urllib.parse.quote_plus(response)}').content)
+        
     print_and_say(response)

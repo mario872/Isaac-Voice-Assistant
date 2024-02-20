@@ -6,8 +6,9 @@ from commands import *
 import requests
 import ast
 import google.generativeai as genai
-from flask import Flask
+from flask import *
 import urllib
+import pyper
 
 ###########################################################################################################
 #Variables
@@ -138,6 +139,7 @@ set_config(settings)
 app = Flask(__name__)
 
 ai = genai.GenerativeModel('gemini-pro', safety_settings=safety)
+pyper.load('James4')
                 
 @app.route('/voice_assistant&request=<request>&prompt=<mode>', methods=['GET'])
 def voice_assistant(request, mode):
@@ -145,7 +147,7 @@ def voice_assistant(request, mode):
 
     answered = False
     
-    request = remove_hotword(urllib.parse.unquote(request)) #Basic formatting to remove Isaac's name from the command
+    request = remove_hotword(urllib.parse.unquote(request).replace('+', ' ')) #Basic formatting to remove Isaac's name from the command
     
     global_request = request
     
@@ -184,6 +186,23 @@ def voice_assistant(request, mode):
                     break
             else:
                 return response
-            
+
+@app.route('/stream', methods=['POST'])
+def stream():
+    if request.method == 'POST':
+        request.files['file'].save('server/audio.wav')
+        r = sr.Recognizer()
+        with sr.AudioFile('server/audio.wav') as source:
+            audio = r.record(source)
+        print('HELLO!')
+        return r.recognize_vosk(audio)
+
+@app.route('/tts&request=<request>')
+def tts(request):
+    request = urllib.parse.unquote(request).replace('+', ' ')
+    print(request)
+    pyper.save(request, 'server/generated_audio.wav')
+    return send_file('generated_audio.wav')
+
 if __name__ == '__main__':
     app.run('0.0.0.0', port=7200)

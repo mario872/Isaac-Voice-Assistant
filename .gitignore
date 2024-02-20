@@ -1,5 +1,8 @@
-main/settings.yaml
-main/vosk-small/
-main/oauth.json
+server/settings.yaml
+vosk-small/
 .gitignore
 __pycache__
+model/
+saved_audio.wav
+audio.wav
+generated_audio.wav
